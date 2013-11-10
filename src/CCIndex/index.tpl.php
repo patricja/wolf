@@ -6,7 +6,7 @@
 <blockquote>
 <code>git clone git://github.com/patjan/lydia.git</code>
 </blockquote>
-<p>You can review its source directly on github: <a href='https://github.com/patricja/wolf4'>https://github.com/patricja/wolf4</a></p>
+<p>You can review its source directly on github: <a href='https://github.com/patricja/wolf'>https://github.com/patricja/wolf</a></p>
 
 <h2>Installation</h2>
 <p>First you have to make the data-directory writable. This is the place where Wolf needs
