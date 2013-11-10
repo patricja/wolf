@@ -19,13 +19,13 @@
 <caption>Details of module.</caption>
 <thead><tr><th>Characteristics</th><th>Applies to module</th></tr></thead>
 <tbody>
-  <tr><td>Part of Lydia Core modules</td><td><?=$module['isLydiaCore']?'Yes':'No'?></td></tr>
-  <tr><td>Part of Lydia CMF modules</td><td><?=$module['isLydiaCMF']?'Yes':'No'?></td></tr>
-  <tr><td>Implements interface(s)</td><td><?=empty($module['interface'])?'No':implode(', ', $module['interface'])?></td></tr>
-  <tr><td>Controller</td><td><?=$module['isController']?'Yes':'No'?></td></tr>
-  <tr><td>Model</td><td><?=$module['isModel']?'Yes':'No'?></td></tr>
-  <tr><td>Has SQL</td><td><?=$module['hasSQL']?'Yes':'No'?></td></tr>
-  <tr><td>Manageable as a module</td><td><?=$module['isManageable']?'Yes':'No'?></td></tr>
+<tr><td>Part of Wolf Core modules</td><td><?=$module['isWolfCore']?'Yes':'No'?></td></tr>
+<tr><td>Part of Wolf CMF modules</td><td><?=$module['isWolfCMF']?'Yes':'No'?></td></tr>
+<tr><td>Implements interface(s)</td><td><?=empty($module['interface'])?'No':implode(', ', $module['interface'])?></td></tr>
+<tr><td>Controller</td><td><?=$module['isController']?'Yes':'No'?></td></tr>
+<tr><td>Model</td><td><?=$module['isModel']?'Yes':'No'?></td></tr>
+<tr><td>Has SQL</td><td><?=$module['hasSQL']?'Yes':'No'?></td></tr>
+<tr><td>Manageable as a module</td><td><?=$module['isManageable']?'Yes':'No'?></td></tr>
 </tbody>
 </table>
 

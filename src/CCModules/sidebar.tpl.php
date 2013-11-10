@@ -3,7 +3,7 @@
 <p>All Wolf modules.</p>
 <ul>
 <?php foreach($modules as $module): ?>
-  <li><?=$module['name']?></li>
+<li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
 <?php endforeach; ?>
 </ul>
 </div>
@@ -14,9 +14,9 @@
 <p>Wolf core modules.</p>
 <ul>
 <?php foreach($modules as $module): ?>
-  <?php if($module['isWolfCore']): ?>
-  <li><?=$module['name']?></li>
-  <?php endif; ?>
+<?php if($module['isWolfCore']): ?>
+<li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
+<?php endif; ?>
 <?php endforeach; ?>
 </ul>
 </div>
@@ -27,9 +27,9 @@
 <p>Wolf Content Management Framework (CMF) modules.</p>
 <ul>
 <?php foreach($modules as $module): ?>
-  <?php if($module['isWolfCMF']): ?>
-  <li><?=$module['name']?></li>
-  <?php endif; ?>
+<?php if($module['isWolfCMF']): ?>
+<li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
+<?php endif; ?>
 <?php endforeach; ?>
 </ul>
 </div>
@@ -40,9 +40,9 @@
 <p>A class is considered a model if its name starts with CM.</p>
 <ul>
 <?php foreach($modules as $module): ?>
-  <?php if($module['isModel']): ?>
-  <li><?=$module['name']?></li>
-  <?php endif; ?>
+<?php if($module['isModel']): ?>
+<li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
+<?php endif; ?>
 <?php endforeach; ?>
 </ul>
 </div>
@@ -53,9 +53,22 @@
 <p>Implements interface <code>IController</code>.</p>
 <ul>
 <?php foreach($modules as $module): ?>
-  <?php if($module['isController']): ?>
-  <li><?=$module['name']?></li>
-  <?php endif; ?>
+<?php if($module['isController']): ?>
+<li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
+<?php endif; ?>
+<?php endforeach; ?>
+</ul>
+</div>
+
+
+<div class='box'>
+<h4>Manageable module</h4>
+<p>Implements interface <code>IModule</code>.</p>
+<ul>
+<?php foreach($modules as $module): ?>
+<?php if($module['isManageable']): ?>
+<li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
+<?php endif; ?>
 <?php endforeach; ?>
 </ul>
 </div>
@@ -66,9 +79,9 @@
 <p>Implements interface <code>IHasSQL</code>.</p>
 <ul>
 <?php foreach($modules as $module): ?>
-  <?php if($module['hasSQL']): ?>
-  <li><?=$module['name']?></li>
-  <?php endif; ?>
+<?php if($module['hasSQL']): ?>
+<li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
+<?php endif; ?>
 <?php endforeach; ?>
 </ul>
 </div>
@@ -79,9 +92,9 @@
 <p>Modules that does not implement any specific Wolf interface.</p>
 <ul>
 <?php foreach($modules as $module): ?>
-  <?php if(!($module['isController'] || $module['isWolfCore'] || $module['isWolfCMF'])): ?>
-  <li><?=$module['name']?></li>
-  <?php endif; ?>
+<?php if(!($module['isController'] || $module['isWolfCore'] || $module['isWolfCMF'])): ?>
+<li><a href='<?=create_url("module/view/{$module['name']}")?>'><?=$module['name']?></a></li>
+<?php endif; ?>
 <?php endforeach; ?>
 </ul>
 </div>
