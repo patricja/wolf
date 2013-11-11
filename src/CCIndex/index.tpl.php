@@ -4,7 +4,7 @@
 <h2>Download</h2>
 <p>You can download Wolf from github.</p>
 <blockquote>
-<code>git clone git://github.com/patjan/lydia.git</code>
+<code>git clone git://github.com/patricja/wolf.git</code>
 </blockquote>
 <p>You can review its source directly on github: <a href='https://github.com/patricja/wolf'>https://github.com/patricja/wolf</a></p>
 
