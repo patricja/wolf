@@ -12,7 +12,9 @@
 <p>First you have to make the data-directory writable. This is the place where Wolf needs
 to be able to write and create files.</p>
 <blockquote>
-<code>cd wolf; chmod 777 site/data</code>
+<code>cd wolf; mkdir site/data</code>
+<br>
+<code>chmod 777 site/data</code>
 </blockquote>
 
 <p>Second, Wolf has some modules that need to be initialised. You can do this through a
