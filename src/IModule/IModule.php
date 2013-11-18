@@ -8,7 +8,7 @@
 * checking writable directory for cache-files, checking pre-conditions that PHP-extensions
 * are available and the right versions of software are installed.
 *
-* @package WolfCore
+* @package LydiaCore
 */
 interface IModule {
   public function Manage($action=null);

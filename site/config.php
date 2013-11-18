@@ -160,10 +160,10 @@ $wo->config['menus'] = array(
 * available to the template files.
 */
 $wo->config['theme'] = array(
-  'path' => 'site/themes/mytheme',
-  'parent' => 'themes/grid',
-  'stylesheet' => 'style.css',
-  'template_file' => 'index.tpl.php',
+  'path'            => 'site/themes/mytheme',
+  'parent'          => 'themes/grid',
+  'stylesheet'      => 'style.css',
+  'template_file'   => 'index.tpl.php',
   'regions' => array('navbar', 'flash','featured-first','featured-middle','featured-last',
     'primary','sidebar','triptych-first','triptych-middle','triptych-last',
     'footer-column-one','footer-column-two','footer-column-three','footer-column-four',
