@@ -86,6 +86,18 @@ class CMGuestbook extends CObject implements IHasSQL, IModule {
       return array();
     }
   }
-
+	
+	/**
+   * Init the guestbook and create appropriate tables.
+   */
+  public function Init() {
+    try {
+      $this->db->ExecuteQuery(self::SQL('create table guestbook'));
+      $this->session->AddMessage('notice', 'Successfully created the database tables (or left them untouched if they already existed).');
+    } catch(Exception$e) {
+      die("$e<br/>Failed to open database: " . $this->config['database'][0]['dsn']);
+    }
+  }
+  
   
 } 

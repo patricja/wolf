@@ -4,7 +4,7 @@
 *
 * @package WolfCore
 */
-class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
+class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess, IModule {
 
   /**
 * Properties
@@ -93,13 +93,19 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
       'create table user2group' => "CREATE TABLE IF NOT EXISTS User2Groups (idUser INTEGER, idGroups INTEGER, created DATETIME default (datetime('now')), PRIMARY KEY(idUser, idGroups));",
       'insert into user' => 'INSERT INTO User (acronym,name,email,algorithm,salt,password) VALUES (?,?,?,?,?,?);',
       'insert into group' => 'INSERT INTO Groups (acronym,name) VALUES (?,?);',
+      'select * from users' => 'SELECT * from user',
+      'select * from groups' => 'SELECT * from groups',
+      'get user by id' => 'SELECT * from user where (id=?);',
+      'get group by id' => 'SELECT * from groups where (id=?);',
+      'delete g from user2groups' => 'DELETE from user2groups where (idgroups=?);',
+      'delete from groups' => 'DELETE from groups where (id=?);',
       'insert into user2group' => 'INSERT INTO User2Groups (idUser,idGroups) VALUES (?,?);',
       'check user password' => 'SELECT * FROM User WHERE (acronym=? OR email=?);',
       'get group memberships' => 'SELECT * FROM Groups AS g INNER JOIN User2Groups AS ug ON g.id=ug.idGroups WHERE ug.idUser=?;',
-      'update profile' => "UPDATE User SET name=?, email=?, updated=datetime('now') WHERE id=?;",
+      'update profile' => "UPDATE User SET name=?, email=?, updated=? WHERE (id=?);",
       'update password' => "UPDATE User SET algorithm=?, salt=?, password=?, updated=datetime('now') WHERE id=?;",
-	  'delete from user' => "DELETE FROM user WHERE id=?;",
       'delete u from user2groups' => "DELETE FROM user2groups WHERE idUser=?;",
+      'delete user' => "DELETE FROM user WHERE (id=?);",
      );
     if(!isset($queries[$key])) {
       throw new Exception("No such SQL query, key '$key' was not found.");
@@ -145,7 +151,114 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
     return ($user != null);
   }
   
+    /**
+* List users.
+*
+* @returns array with listing of users.
+*/
+  public function ListAllUsers() {
+    try {
+      return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * from users'));
+    } catch(Exception $e) {
+      echo $e;
+      return null;
+    }
+  }
+  
+  /**
+* List groups.
+*
+* @returns array with listing of groups.
+*/
+  public function ListAllGroups() {
+    try {
+      return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('select * from groups'));
+    } catch(Exception $e) {
+      echo $e;
+      return null;
+    }
+  }
+  
+   /**
+* Get user.
+*
+* @returns array with listing of users.
+*/
+  public function GetUser($id) {
+    try {
+      return $this->db->ExecuteSelectQuery(self::SQL('get user by id'), array($id));
+    } catch(Exception $e) {
+      echo $e;
+      return null;
+    }
+  }
+   /**
+* Get user membership
+*
+* @returns array with listing of which group a user belongs to.
+*/
+  public function GetGroupMemberships($id) {
+    try {
+      return $this->db->ExecuteSelectQueryAndFetchAll(self::SQL('get group memberships'), array($id));
+    } catch(Exception $e) {
+      echo $e;
+      return null;
+    }
+  }
+  
+    /**
+* Create new group.
+*
+* @param $acronym string short version of group name.
+* @param $name string full group name.
+* @returns boolean true if group was created or else false and sets failure message in session.
+*/
+  public function CreateGroup($acronym, $name) {
+    $this->db->ExecuteQuery(self::SQL('insert into group'), array($acronym, $name));
+    if($this->db->RowCount() == 0) {
+      $this->AddMessage('error', "Failed to create group.");
+      return false;
+    }
+    return true;
+}
 
+  /**
+* Get group.
+*
+* @returns array with listing of groups.
+*/
+  public function GetGroup($id) {
+    try {
+      return $this->db->ExecuteSelectQuery(self::SQL('get group by id'), array($id));
+    } catch(Exception $e) {
+      echo $e;
+      return null;
+    }
+  }
+  
+    /**
+* Delete group.
+*
+* @param $id int group id.
+* @returns boolean true if success else false.
+*/
+  public function DeleteGroup($id) {
+    $this->db->ExecuteQuery(self::SQL('delete g from user2groups'), array($id));
+    $this->db->ExecuteQuery(self::SQL('delete from groups'), array($id));
+    return true;
+  }
+      /**
+* Delete user.
+*
+* @param $id int user id.
+* @returns boolean true if success else false.
+*/
+  public function DeleteUser($id) {
+    $this->db->ExecuteQuery(self::SQL('delete user'), array($id));
+    $this->db->ExecuteQuery(self::SQL('delete from groups'), array($id));
+    return true;
+  }
+  
   /**
 * Logout. Clear both session and internal properties.
 */
@@ -156,18 +269,18 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
   }
   
 
-  /**
+ /**
 * Create new user.
 *
-* @param $acronym string the acronym.
+* @param $username string the username.
 * @param $password string the password plain text to use as base.
 * @param $name string the user full name.
 * @param $email string the user email.
 * @returns boolean true if user was created or else false and sets failure message in session.
 */
-  public function Create($acronym, $password, $name, $email) {
+  public function Create($username, $password, $name, $email) {
     $pwd = $this->CreatePassword($password);
-    $this->db->ExecuteQuery(self::SQL('insert into user'), array($acronym, $name, $email, $pwd['algorithm'], $pwd['salt'], $pwd['password']));
+    $this->db->ExecuteQuery(self::SQL('insert into user'), array($username, $name, $email, $pwd['algorithm'], $pwd['salt'], $pwd['password'], date('Y-m-d H:i:s')));
     if($this->db->RowCount() == 0) {
       $this->AddMessage('error', "Failed to create user.");
       return false;
@@ -186,7 +299,7 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
 */
   public function CreatePassword($plain, $algorithm=null) {
     $password = array(
-      'algorithm'=>($algorithm ? $algorithm : CWolf::Instance()->config['hashing_algorithm']),
+      'algorithm'=>($algorithm ? $algoritm : CWolf::Instance()->config['hashing_algorithm']),
       'salt'=>null
     );
     switch($password['algorithm']) {
@@ -200,17 +313,6 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
     return $password;
   }
   
-  /**
-* Delete user.
-*
-* @param $id int user id.
-* @returns boolean true if success else false.
-*/
-  public function DeleteUser($id) {
-    $this->db->ExecuteQuery(self::SQL('delete u from user2groups'), array($id));
-    $this->db->ExecuteQuery(self::SQL('delete from user'), array($id));
-    return true;
-  }
 
   /**
 * Check if password matches.
@@ -233,17 +335,17 @@ class CMUser extends CObject implements IHasSQL, ArrayAccess, IModule {
   }
   
 
-  /**
-* Save user profile to database and update user profile in session.
+ /**
+* Save user profile to database.
 *
 * @returns boolean true if success else false.
 */
-  public function Save() {
-    $this->db->ExecuteQuery(self::SQL('update profile'), array($this['name'], $this['email'], $this['id']));
-    $this->session->SetAuthenticatedUser($this->profile);
+  public function Save($name, $email, $id) {
+    $this->db->ExecuteQuery(self::SQL('update profile'), array($name, $email, date('Y-m-d H:i:s'), $id));
+ /*   $this->db->ExecuteQuery(self::SQL('delete u from user2groups'), array($id));
+   */
     return $this->db->RowCount() === 1;
   }
-  
   
   /**
 * Change user password.

@@ -3,13 +3,18 @@
 */
 @import url(../../../themes/bootstrap/css/bootstrap.css);
 
-html{background:url(../../../themes/bootstrap/img/tree_bark.png);}
-body{background:url(../../../themes/bootstrap/img/tree_bark.png);}
+html{background:#0000FE;}
+body{background:#0000FE;}
 
 #outer-wrap-header{background-color:#fff;border-bottom:2px solid #000}
 #outer-wrap-footer{background-color:#ddd}
 a{color:#463}
+
 #footer{color:#ddd;}
+
+pre, .hero-unit, .well{background:#FFFF01;}
+pre p{color:;}
+#modal-footer p{color:#FFFF01;}
 
 .nav ul li,
 .nav ol {
@@ -19,4 +24,3 @@ a{color:#463}
     padding:10px;
     margin:10px;
 }
-

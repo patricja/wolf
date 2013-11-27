@@ -120,14 +120,15 @@ $wo->config['routing'] = array(
 * Create hardcoded menus and map them to a theme region through $wo->config['theme'].
 */
 $wo->config['menus'] = array(
-  'navbar' => array(
+  'sample-menu' => array(
     'home' => array('label'=>'Home', 'url'=>'home'),
     'modules' => array('label'=>'Modules', 'url'=>'module'),
     'content' => array('label'=>'Content', 'url'=>'content'),
     'guestbook' => array('label'=>'Guestbook', 'url'=>'guestbook'),
     'blog' => array('label'=>'Blog', 'url'=>'blog'),
+    'acp' => array('label'=>'ACP', 'url'=>'acp'),
   ),
-  'my-navbar' => array(
+  'small-samlpe-menu' => array(
     'home' => array('label'=>'About Me', 'url'=>'my'),
     'blog' => array('label'=>'My Blog', 'url'=>'my/blog'),
     'guestbook' => array('label'=>'Guestbook', 'url'=>'my/guestbook'),
@@ -160,23 +161,32 @@ $wo->config['menus'] = array(
 * available to the template files.
 */
 $wo->config['theme'] = array(
-  'path'            => 'site/themes/mytheme',
-  'parent'          => 'themes/grid',
-  'stylesheet'      => 'style.css',
-  'template_file'   => 'index.tpl.php',
-  'regions' => array('navbar', 'flash','featured-first','featured-middle','featured-last',
-    'primary','sidebar','triptych-first','triptych-middle','triptych-last',
-    'footer-column-one','footer-column-two','footer-column-three','footer-column-four',
-    'footer',
-  ),
-  'menu_to_region' => array('my-navbar'=>'navbar'),
+  // The name of the theme in the theme directory
+  'path' => 'site/themes/mytheme', // choose from 2 themes: mytheme and swe_theme
+  'parent' => 'themes/bootstrap',
+  'name' => 'grid',
+  'stylesheet' => 'style.css', // Main stylesheet to include in template files
+  'template_file' => 'index.tpl.php', // Default template file, else use default.tpl.php
+  
+  'menu_to_region' => array('sample-menu'=>'navbar'), //choose from two menus: sample-menu and small-samlpe-menu
   'data' => array(
     'header' => 'Wolf',
     'slogan' => 'A PHP-based MVC-inspired CMF',
     'favicon' => 'logo_80x80.png',
-    'logo' => 'logo_80x80.png',
+    'logo' => 'wolf.jpeg',
     'logo_width' => 80,
     'logo_height' => 80,
     'footer' => '<p>Lydia &copy; by Mikael Roos (mos@dbwebb.se) modified by Patric</p>',
   ),
 );
+
+
+/**
+* Theme specific configuration
+*/
+
+$wo->config['theme']['grid']['regions'] = array('navbar','flash','featured-first','featured-middle','featured-last', 'primary','sidebar','triptych-first','triptych-middle','triptych-last', 'footer-column-one','footer-column-two','footer-column-three','footer-column-four', 'footer');
+
+$wo->config['theme']['bootstrap']['regions'] = array('navbar','primary','sidebar','footer-column-one','footer-column-two','footer-column-three','footer-column-four','footer');
+
+

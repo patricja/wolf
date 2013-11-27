@@ -4,13 +4,13 @@
 *
 * @package WolfCore
 */
-class CFormUserProfile extends CForm {
+class CFormAdminUserProfile extends CForm {
 
   /**
 * Constructor
 */
   public function __construct($object, $user) {
-    parent::__construct();
+     parent::__construct();
     $this->AddElement(new CFormElementText('acronym', array('readonly'=>true, 'value'=>$user['acronym'])))
          ->AddElement(new CFormElementPassword('password'))
          ->AddElement(new CFormElementPassword('password1', array('label'=>'Password again:')))

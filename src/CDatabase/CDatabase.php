@@ -61,7 +61,17 @@ class CDatabase {
     return $this->stmt->execute($params);
   }
 
-
+   /**
+* Execute a select-query with arguments and return the first result.
+*/
+  public function ExecuteSelectQuery($query, $params=array()){
+    $this->stmt = $this->db->prepare($query);
+    self::$queries[] = $query;
+    self::$numQueries++;
+    $this->stmt->execute($params);
+    return $this->stmt->fetch(PDO::FETCH_ASSOC);
+  }
+  
   /**
 * Return last insert id.
 */

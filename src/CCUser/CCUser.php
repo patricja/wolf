@@ -59,6 +59,20 @@ class CCUser extends CObject implements IController {
     $this->RedirectToController('profile');
   }
   
+    /**
+* Delete a user as callback on a submitted form.
+*
+* @param $form CForm the form that was submitted
+*/
+  public function DoDeleteUser($form) {
+    if($this->user->DeleteUser($form['id']['value'])) {
+      $this->AddMessage('success', "You have successfully deleted the user");
+      $this->RedirectToController('users');
+    } else {
+      $this->AddMessage('notice', "Failed to delete user.");
+      $this->RedirectToController('users');
+    }
+  }
 
   /**
 * Save updates to profile information.
