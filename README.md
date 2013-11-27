@@ -50,6 +50,9 @@ Loggan ändras genom att ändra 'logo' variabeln till ditt filnamn samt lägga t
 
 Nedan följer en snippet av config filen.
 
+/**
+	 * Settings for the theme.
+	 */
 $wo->config['theme'] = array(
   // The name of the theme in the theme directory
   'path' => 'site/themes/swe_theme', // choose from 2 themes: mytheme and swe_theme
