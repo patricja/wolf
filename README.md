@@ -22,7 +22,7 @@ Du skapar därefter katalogen site/data som behövs för sqlite genom:
 3# chmod 777 site/data
 
 Därefter kanske du behöver anpassa .htaccess filen på ett liknande sätt:
-# Must use RewriteBase on www.student.bth.se, Rewritebase for url /~mos/test is /~mos/test/
+`Rewritebase for url /~mos/test is /~mos/test/`
   
 Öppna upp en webbläsare och navigera till katalogen där du installerade. 
 
@@ -42,36 +42,37 @@ Här följer lite exempel på vad du kan göra:
 ### Ändra logo, webbplatsens titel, footer och navigeringsmeny ###
 
 Du kan ändra titel, footer och navigeringsmeny från config.php filen som ligger i site mappen.
-Här kan du ändra tema / utseende via $wo->config['theme'] = array. Välj mellan mytheme eller swe_theme.
-Du ändrar navigeringmeny via 'menu_to_region' => array. Välj mellan sample-menu and small-samlpe-menu.
-Här kan du också ändra header och footer via 'data' => array
+Här kan du ändra tema / utseende via `$wo->config['theme'] = array`. Välj mellan mytheme eller swe_theme.          
+Du ändrar navigeringmeny via `'menu_to_region' => array`. Välj mellan sample-menu and small-samlpe-menu.
+Här kan du också ändra header och footer via `'data' => array`
+
 Loggan ändras genom att ändra 'logo' variabeln till ditt filnamn samt lägga till bilden i ditt valda tema site/themes/..../logo.jpg
 
+config.php:
 
-Nedan följer en snippet av config filen.
-
-/**
-	 * Settings for the theme.
+	/**
+	 * 	Settings for the theme.
+	 *
 	 */
-$wo->config['theme'] = array(
-  // The name of the theme in the theme directory
-  'path' => 'site/themes/swe_theme', // choose from 2 themes: mytheme and swe_theme
-  'parent' => 'themes/bootstrap',
-  'name' => 'grid',
-  'stylesheet' => 'style.css', // Main stylesheet to include in template files
-  'template_file' => 'index.tpl.php', // Default template file, else use default.tpl.php
+		'$wo->config['theme'] = array(
+  		// The name of the theme in the theme directory
+		'path' => 'site/themes/swe_theme', // choose from 2 themes: mytheme and swe_theme
+  		'parent' => 'themes/bootstrap',
+  		'name' => 'grid',
+  		'stylesheet' => 'style.css', // Main stylesheet to include in template files
+  		'template_file' => 'index.tpl.php', // Default template file, else use default.tpl.php
   
-  'menu_to_region' => array('sample-menu'=>'navbar'), //choose from two menus: sample-menu and small-samlpe-menu
-  'data' => array(
-    'header' => 'Wolf',
-    'slogan' => 'A PHP-based MVC-inspired CMF',
-    'favicon' => 'logo_80x80.png',
-    'logo' => 'wolf.jpeg',
-    'logo_width' => 80,
-    'logo_height' => 80,
-    'footer' => '<p>Lydia &copy; by Mikael Roos (mos@dbwebb.se) modified by Patric</p>',
-  ),
-);
+		'menu_to_region' => array('sample-menu'=>'navbar'), //choose from two menus: sample-menu and small-samlpe-menu
+  		'data' => array(
+    		'header' => 'Wolf',
+    		'slogan' => 'A PHP-based MVC-inspired CMF',
+    		'favicon' => 'logo_80x80.png',
+    		'logo' => 'wolf.jpeg',
+    		'logo_width' => 80,
+    		'logo_height' => 80,
+    		'footer' => '<p>Lydia &copy; by Mikael Roos (mos@dbwebb.se) modified by Patric</p>',
+  		   ),
+		);
 
 
 ### Skapa blogg inlägg och sidor ###
