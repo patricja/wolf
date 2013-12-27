@@ -353,9 +353,9 @@ class CMAdminControlPanel extends CObject implements IHasSQL, ArrayAccess, IModu
 * @param $plain string plaintext of the new password
 * @returns boolean true if success else false.
 */
-  public function ChangePassword($plain) {
+  public function ChangePassword($plain,$id) {
     $password = $this->CreatePassword($plain);
-    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], $this['id']));
+    $this->db->ExecuteQuery(self::SQL('update password'), array($password['algorithm'], $password['salt'], $password['password'], $id['id']));
     return $this->db->RowCount() === 1;
   }
   
